@@ -5,6 +5,8 @@ import { useState } from 'react';
 
 import "./styles.css";
 
+let BASE_URL="http://192.168.1.72:5000";
+
 function App() {
 
     // const [errorMessages, setErrorMessages] = useState({});
@@ -32,7 +34,7 @@ function App() {
         }
 
         try {
-            await fetch("http://192.168.1.67:5000/login",
+            await fetch(BASE_URL + "/login",
                 {
                     method: "POST",
                     body: JSON.stringify(info),
@@ -76,7 +78,7 @@ function App() {
         event.preventDefault();
 
         try {
-            fetch("http://192.168.1.67:5000/profile",
+            fetch(BASE_URL + "/profile",
                 {
                     method: "GET",
                     headers: {
@@ -111,7 +113,7 @@ function App() {
         event.preventDefault();
 
         try {
-            fetch("http://192.168.1.67:5000/logout",
+            fetch(BASE_URL + "/logout",
                 {
                     method: "POST",
                     headers: {
