@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import "./styles.css";
 
-let BASE_URL="http://192.168.1.72:5000";
+let BASE_URL = "http://localhost:5000";
 
 function App() {
 
@@ -142,13 +142,13 @@ function App() {
 
     const RenderLoggedInState = () => {
         return <div>
-                <h1>You are logged in!</h1>
-                <button onClick={handleProfileClick}>Profile</button>
-                <button onClick={handleLogout}>Logout</button>
-            </div>
+            <h1>You are logged in!</h1>
+            <button onClick={handleProfileClick}>Profile</button>
+            <button onClick={handleLogout}>Logout</button>
+        </div>
     }
 
-    const renderForm = () => {
+    const renderLoginForm = () => {
         return <div className="login-form">
             <div className="form">
                 <div className="title">Sign In</div>
@@ -173,7 +173,7 @@ function App() {
     }
 
     return (<div className="app">
-        {token === 0 ? renderForm() : RenderLoggedInState()}
+        {token === 0 ? renderLoginForm() : RenderLoggedInState()}
         {text.text}
     </div>);
 }
