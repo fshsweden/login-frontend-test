@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import "./styles.css";
 
-let BASE_URL = "http://localhost:5000";
+let BASE_URL = "http://localhost:5001";
 
 function App() {
 
@@ -34,7 +34,7 @@ function App() {
         }
 
         try {
-            await fetch(BASE_URL + "/login",
+            fetch(BASE_URL + "/login",
                 {
                     method: "POST",
                     body: JSON.stringify(info),
@@ -83,9 +83,11 @@ function App() {
                     "Accept": "application/json",
                     "Authorization": "Bearer " + token
                 }
-            }).then((response) => {
-                const statusCode = response.status;
-                const data = response.json();
+            }).then(async (response) => {
+                console.log(response);
+                const statusCode = await response.status;
+                const data = await response.json();
+                console.log(data);
                 return Promise.all([statusCode, data]);
             });
         }
@@ -93,26 +95,21 @@ function App() {
             console.error(err);
         }
     }
-            
-                    
+
+
     const handleProfileClick = (event) => {
 
         event.preventDefault();
 
         try {
-            fetch(BASE_URL + "/profile",
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json;charset=UTF-8",
-                        "Accept": "application/json",
-                        "Authorization": "Bearer " + token
-                    }
-                    if (json.about) {
-                        setText({ text: "HEJ", color: "black" })
-                    }
-
+            fetchData(BASE_URL + "/profile").then(([code, data]) => {
+                console.log(data);
+                setText({
+                    text: data.about,
+                    color: "blue"
                 });
+            });
+
         } catch (err) {
             console.error(err);
             setToken(0);
@@ -186,7 +183,11 @@ function App() {
 
     return (<div className="app">
         {token === 0 ? renderLoginForm() : RenderLoggedInState()}
-        {text.text}
+
+        <p style={{fontSize: 30, color: text.color }}>
+            {text.text}
+        </p>
+        
     </div>);
 }
 
