@@ -73,6 +73,28 @@ function App() {
 
     };
 
+    const fetchData = async (url) => {
+        let token = localStorage.getItem("access_token");
+        try {
+            return fetch(url, {
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json;charset=UTF-8",
+                    "Accept": "application/json",
+                    "Authorization": "Bearer " + token
+                }
+            }).then((response) => {
+                const statusCode = response.status;
+                const data = response.json();
+                return Promise.all([statusCode, data]);
+            });
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+            
+                    
     const handleProfileClick = (event) => {
 
         event.preventDefault();
@@ -86,24 +108,14 @@ function App() {
                         "Accept": "application/json",
                         "Authorization": "Bearer " + token
                     }
-                })
-                .then((response) => {
-                    const statusCode = response.status;
-                    console.log(statusCode)
-                    const data = response.json();
-                    console.log(data)
-                    return Promise.all([statusCode, data]);
-                })
-                .then((data) => {
-                    console.log(data);
-                    data = data[1]
-                    if (data.about) {
-                        setText({ text: data.about, color: "black" })
+                    if (json.about) {
+                        setText({ text: "HEJ", color: "black" })
                     }
 
                 });
         } catch (err) {
             console.error(err);
+            setToken(0);
         }
 
 
