@@ -130,9 +130,12 @@ function App() {
 
                 // New
                 if (data.access_token) {
-                    setToken(data.access_token); // Temp!
+                    setToken(prevState => data.access_token);
                     console.log("Setting new token:" + data.access_token);
                     localStorage.setItem("access_token", data.access_token);
+                }
+                else {
+                    console.error("data did not contain access_token!");
                 }
 
                 return Promise.all([statusCode, data]);
